@@ -1,7 +1,65 @@
 #include "pascalTriangle.h"
 
+// C to find out a value
+// E to print x many rows
+// after enter q to quit
 void pascalTriangle::run()
 {
+    char userChoice;
+    bool valid;
+    int userNumX, userNumY;
+    do
+    {
+        do
+        {
+            system("cls");
+            cout << "To print out x many rows enter \'e\'" << endl
+                 << "To print out a specifc value enter \'c\'" << endl;
+            cin >> userChoice;
+        } while (userChoice != 'c' && userChoice != 'C' && userChoice != 'e' && userChoice != 'E');
+        if (userChoice == 'c' || userChoice == 'C')
+        {
+            do
+            {
+                valid = false;
+                system("cls");
+                cout << "You have decided to get the value of at a specific point: "
+                     << endl
+                     << "Enter the row: ";
+                cin >> userNumX;
+                cout << "Enter the column: ";
+                cin >> userNumY;
+                cout << endl;
+
+                if (userNumX > 0 && userNumY > 0)
+                    valid = true;
+
+            } while (!valid);
+            getValAt(userNumX, userNumY);
+        }
+        else
+        {
+            do
+            {
+                valid = false;
+                system("cls");
+                cout << "You have decided to get print out x number of rows: "
+                     << endl
+                     << "Enter the number of rows: ";
+                cin >> userNumX;
+
+                if (userNumX >= 0)
+                    valid = true;
+
+            } while (!valid);
+            generate(userNumX);
+            printTriangle();
+        }
+        cout << endl
+             << "Enter q to stop:" << endl;
+        cin >> userChoice;
+    } while (userChoice != 'q' && userChoice != 'Q');
+    cout << "Good bye" << endl;
 }
 
 void pascalTriangle::generate(unsigned numRows)
@@ -45,10 +103,10 @@ void pascalTriangle::printTriangle()
 unsigned pascalTriangle::getValAt(unsigned row, unsigned col)
 {
     generate(row);
-    if (triangle.at(row).size() < col)
+    if (triangle.at(row - 1).size() < col)
         cout << "Column is out of range" << endl;
     else
-        cout << triangle[row][col] << endl;
+        cout << triangle[row - 1][col - 1] << endl;
 }
 
 vector<vector<unsigned>> pascalTriangle::getTriangle()
